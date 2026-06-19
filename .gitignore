@@ -4,3 +4,7 @@ cache/
 .hardhat-home/
 .hardhat-data/
 .hardhat-cache-home/
+.env
+.venv/
+__pycache__/
+*.py[cod]
