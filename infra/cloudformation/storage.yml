@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: S3 storage for ProofVault evidence files
+
+Parameters:
+  FrontendOrigin:
+    Type: String
+    Default: http://localhost:5173
+
+Resources:
+  EvidenceBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ["*"]
+            AllowedMethods: [GET, PUT]
+            AllowedOrigins:
+              - !Ref FrontendOrigin
+              - http://localhost:5173
+            ExposedHeaders: [ETag]
+            MaxAge: 3600
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  EvidenceAccessPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: S3 access used by the ProofVault API
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: BucketLocation
+            Effect: Allow
+            Action: s3:GetBucketLocation
+            Resource: !GetAtt EvidenceBucket.Arn
+          - Sid: EvidenceObjects
+            Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+            Resource: !Sub ${EvidenceBucket.Arn}/cases/*
+
+Outputs:
+  BucketName:
+    Value: !Ref EvidenceBucket
+  BucketArn:
+    Value: !GetAtt EvidenceBucket.Arn
+  EvidenceAccessPolicyArn:
+    Value: !Ref EvidenceAccessPolicy
