@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ProofVault frontend on Amplify
+
+Parameters:
+  RepositoryUrl:
+    Type: String
+    Default: https://github.com/Vicientt/ProofVault
+  BranchName:
+    Type: String
+    Default: feature/backend-foundation
+  GitHubAccessToken:
+    Type: String
+    NoEcho: true
+  ApiBaseUrl:
+    Type: String
+  ContractAddress:
+    Type: String
+    Default: ""
+  ChainId:
+    Type: Number
+    Default: 80002
+  ExplorerUrl:
+    Type: String
+    Default: https://amoy.polygonscan.com
+
+Resources:
+  FrontendApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: proofvault
+      Repository: !Ref RepositoryUrl
+      AccessToken: !Ref GitHubAccessToken
+      BuildSpec: |
+        version: 1
+        applications:
+          - appRoot: frontend
+            frontend:
+              phases:
+                preBuild:
+                  commands:
+                    - npm ci
+                build:
+                  commands:
+                    - npm run build
+              artifacts:
+                baseDirectory: dist
+                files:
+                  - "**/*"
+              cache:
+                paths:
+                  - node_modules/**/*
+      EnvironmentVariables:
+        - Name: VITE_API_BASE_URL
+          Value: !Ref ApiBaseUrl
+        - Name: VITE_CONTRACT_ADDRESS
+          Value: !Ref ContractAddress
+        - Name: VITE_CHAIN_ID
+          Value: !Ref ChainId
+        - Name: VITE_EXPLORER_URL
+          Value: !Ref ExplorerUrl
+      CustomRules:
+        - Source: </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|map|json)$)([^.]+$)/>
+          Target: /index.html
+          Status: "200"
+
+  FrontendBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt FrontendApp.AppId
+      BranchName: !Ref BranchName
+      EnableAutoBuild: true
+      Stage: DEVELOPMENT
+
+Outputs:
+  AmplifyAppId:
+    Value: !GetAtt FrontendApp.AppId
+  DefaultDomain:
+    Value: !GetAtt FrontendApp.DefaultDomain
