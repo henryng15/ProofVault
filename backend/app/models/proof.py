@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import BigInteger, DateTime, Index, String, Uuid, func
+from sqlalchemy import BigInteger, DateTime, Index, String, UniqueConstraint, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -14,6 +14,7 @@ class Proof(Base):
         Index("ix_proofs_tx_hash", "tx_hash", unique=True),
         Index("ix_proofs_token_hash", "token_hash"),
         Index("ix_proofs_file_id_created_at", "file_id", "created_at"),
+        UniqueConstraint("file_id", "chain_id", name="uq_proofs_file_id_chain_id"),
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)

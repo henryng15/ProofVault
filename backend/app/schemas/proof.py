@@ -24,6 +24,10 @@ class ProofConfirmationRequest(BaseModel):
     chain_id: int = Field(gt=0)
 
 
+class StoredProofConfirmationRequest(ProofConfirmationRequest):
+    case_id: UUID
+
+
 class ProofConfirmationResponse(ProofConfirmationRequest):
     id: UUID
     proof_status: ProofStatus
