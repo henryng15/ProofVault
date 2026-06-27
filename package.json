@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vicientt/ProofVault.git"
+    "url": "git+https://github.com/henryng15/ProofVault.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Vicientt/ProofVault/issues"
+    "url": "https://github.com/henryng15/ProofVault/issues"
   },
-  "homepage": "https://github.com/Vicientt/ProofVault#readme",
+  "homepage": "https://github.com/henryng15/ProofVault#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.2",
     "hardhat": "^2.28.6"
