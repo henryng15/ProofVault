@@ -1,0 +1,96 @@
+{
+  "network": "amoy",
+  "chainId": 80002,
+  "contractAddress": "0x0aC590d6C156DAb17478e863350777C25B7Aa79D",
+  "deploymentTxHash": "0xd2ea0dd3a59fcf72b56ce2e104779b0b762ed2b4a5215f7674c6bc4444ba9b81",
+  "deploymentTimestamp": "2026-06-26T22:46:28.711Z",
+  "abi": [
+    {
+      "type": "event",
+      "anonymous": false,
+      "name": "ProofCreated",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "caseId",
+          "indexed": true
+        },
+        {
+          "type": "bytes32",
+          "name": "fileHash",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "timestamp",
+          "indexed": false
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "createProof",
+      "constant": false,
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "caseId"
+        },
+        {
+          "type": "bytes32",
+          "name": "fileHash"
+        },
+        {
+          "type": "bytes32",
+          "name": "metadataHash"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "proofs",
+      "constant": true,
+      "stateMutability": "view",
+      "payable": false,
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": ""
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "owner"
+        },
+        {
+          "type": "bytes32",
+          "name": "caseId"
+        },
+        {
+          "type": "bytes32",
+          "name": "fileHash"
+        },
+        {
+          "type": "bytes32",
+          "name": "metadataHash"
+        },
+        {
+          "type": "uint256",
+          "name": "timestamp"
+        },
+        {
+          "type": "uint8",
+          "name": "status"
+        }
+      ]
+    }
+  ]
+}
