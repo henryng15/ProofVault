@@ -1,6 +1,7 @@
 node_modules/
 artifacts/
 cache/
+dist/
 .env
 .hardhat-home/
 .hardhat-data/
