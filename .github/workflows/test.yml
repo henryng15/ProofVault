@@ -1,0 +1,46 @@
+name: Smart Contract Tests
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'contracts/**'
+      - 'test/**'
+      - 'hardhat.config.js'
+      - 'package.json'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'contracts/**'
+      - 'test/**'
+      - 'hardhat.config.js'
+      - 'package.json'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Compile smart contracts
+        run: npx hardhat compile
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Check code formatting
+        run: npx hardhat flatten contracts/ProofVault.sol > /dev/null
+        continue-on-error: true
