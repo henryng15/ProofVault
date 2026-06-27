@@ -1,19 +1,22 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-const privateKey = process.env.PRIVATE_KEY;
-const accounts =
-  privateKey && /^(0x)?[0-9a-fA-F]{64}$/.test(privateKey)
-    ? [privateKey.startsWith("0x") ? privateKey : `0x${privateKey}`]
-    : [];
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 
 module.exports = {
   solidity: "0.8.28",
   networks: {
-    amoy: {
-      url: process.env.AMOY_RPC_URL || "https://polygon-amoy.drpc.org",
-      chainId: 80002,
-      accounts,
-    },
+    // Only configure amoy when env vars are present (local dev/deployment).
+    // CI runs tests on the built-in hardhat network, so this is not needed there.
+    ...(PRIVATE_KEY && ALCHEMY_API_KEY
+      ? {
+          amoy: {
+            url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+            accounts: [PRIVATE_KEY],
+            chainId: 80002,
+          },
+        }
+      : {}),
   },
 };

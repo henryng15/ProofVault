@@ -4,25 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "hardhat compile",
-    "test": "hardhat test",
-    "deploy:amoy": "hardhat run scripts/deploy.js --network amoy"
+    "deploy": "hardhat run scripts/deploy.js --network amoy",
+    "create-proof": "hardhat run scripts/createProof.js --network amoy",
+    "test": "hardhat test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vicientt/ProofVault.git"
+    "url": "git+https://github.com/henryng15/ProofVault.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Vicientt/ProofVault/issues"
+    "url": "https://github.com/henryng15/ProofVault/issues"
   },
-  "homepage": "https://github.com/Vicientt/ProofVault#readme",
+  "homepage": "https://github.com/henryng15/ProofVault#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.2",
-    "dotenv": "^16.6.1",
     "hardhat": "^2.28.6"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
