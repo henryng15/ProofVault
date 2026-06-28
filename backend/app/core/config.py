@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
     contract_address: str = ""
     chain_id: int = 80002
+    amoy_rpc_url: str = "https://polygon-amoy.g.alchemy.com/v2/your_key_here"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
