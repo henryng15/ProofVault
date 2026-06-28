@@ -2,7 +2,7 @@ from app.models.case import Case
 from app.models.case_event import CaseEvent
 from app.models.evidence_file import EvidenceFile
 from app.models.proof import Proof
-from app.models.share_link import ShareLink
+from app.models.user import User
 from app.models.verification_attempt import VerificationAttempt
 
 __all__ = [
@@ -10,6 +10,6 @@ __all__ = [
     "CaseEvent",
     "EvidenceFile",
     "Proof",
-    "ShareLink",
+    "User",
     "VerificationAttempt",
 ]
