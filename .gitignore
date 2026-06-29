@@ -3,6 +3,10 @@ artifacts/
 cache/
 dist/
 .env
+.env.example
 .hardhat-home/
 .hardhat-data/
 .hardhat-cache-home/
+__pycache__/
+*.pyc
+backend/venv/

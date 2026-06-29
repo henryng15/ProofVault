@@ -1,11 +1,19 @@
+import os
 from logging.config import fileConfig
+from pathlib import Path
 
+from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
+# Load .env file explicitly
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
+
 # Import Base so Alembic can detect all models for autogenerate.
 from app.db.base import Base
+from app.core.config import settings
 
 # Import all models so their tables are registered on Base.metadata.
 import app.models  # noqa: F401
@@ -14,6 +22,9 @@ config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+
+# Read DATABASE_URL from .env file via settings
+config.set_main_option("sqlalchemy.url", settings.database_url)
 
 target_metadata = Base.metadata
 
