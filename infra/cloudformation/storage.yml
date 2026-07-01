@@ -18,12 +18,15 @@ Resources:
               SSEAlgorithm: AES256
       CorsConfiguration:
         CorsRules:
-          - AllowedHeaders: ["*"]
-            AllowedMethods: [GET, PUT]
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - PUT
             AllowedOrigins:
               - !Ref FrontendOrigin
-              - http://localhost:5173
-            ExposedHeaders: [ETag]
+            ExposedHeaders:
+              - ETag
             MaxAge: 3600
       OwnershipControls:
         Rules:
