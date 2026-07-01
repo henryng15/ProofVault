@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { api, type CaseDetail, type CaseSummary, type EvidenceFile, type ShareReport, type TimelineEvent } from "./api/client";
+import { clearSession, createSession, getSession } from "./auth/session";
 import VerifyPanel from "./components/VerifyPanel";
 import WalletProofPanel from "./components/WalletProofPanel";
 import { hashFile } from "./files/hashFile";
@@ -53,7 +54,57 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
+function LoginScreen({ onLogin }: { onLogin: (name: string) => void }) {
+  const [name, setName] = useState("");
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (name.trim()) onLogin(name.trim());
+  }
+  return (
+    <div className="login-screen">
+      <div className="login-card">
+        <div className="login-brand"><ShieldCheck size={32} /><h1>ProofVault</h1></div>
+        <p>Tamper-proof evidence on the blockchain.</p>
+        <form onSubmit={submit} className="login-form">
+          <div className="form-group">
+            <label htmlFor="login-name">Your name</label>
+            <input
+              id="login-name"
+              type="text"
+              className="form-input"
+              placeholder="e.g. Henry Ng"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoFocus
+              required
+            />
+          </div>
+          <button type="submit" className="button primary full" disabled={!name.trim()}>
+            Get started
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
+  const [session, setSession] = useState(getSession());
+
+  function handleLogin(name: string) {
+    setSession(createSession(name));
+  }
+
+  function handleLogout() {
+    clearSession();
+    setSession(null);
+    setCases([]);
+    setCaseDetail(null);
+    setView("dashboard");
+  }
+
+  if (!session) return <LoginScreen onLogin={handleLogin} />;
+
   // Navigation — check on mount if URL contains a share token
   const initialShareToken = new URLSearchParams(window.location.search).get("share");
   const [view, setView] = useState<AppView>(initialShareToken ? "share-report" : "dashboard");
@@ -247,10 +298,10 @@ export default function App() {
         </nav>
 
         <div className="sidebar-bottom">
-          <button><Settings size={18} /> Settings</button>
+          <button onClick={handleLogout}><Settings size={18} /> Log out</button>
           <div className="user">
-            <span className="avatar">HN</span>
-            <div><strong>Henry Ng</strong><small>Developer</small></div>
+            <span className="avatar">{session.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}</span>
+            <div><strong>{session.name}</strong><small>ProofVault user</small></div>
           </div>
         </div>
       </aside>
