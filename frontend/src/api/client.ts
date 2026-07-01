@@ -46,9 +46,28 @@ export type ProofRequest = {
 };
 
 export type ShareLink = {
-  id: string;
-  url: string;
-  expires_at: string;
+  token: string;
+  share_url: string;
+  created_at: string;
+};
+
+export type ShareFileReport = {
+  file_name: string;
+  file_size: number;
+  mime_type: string;
+  file_hash: string | null;
+  proof_status: string | null;
+  tx_hash: string | null;
+  block_number: number | null;
+  chain_id: number | null;
+};
+
+export type ShareReport = {
+  case_id: string;
+  case_title: string;
+  case_description: string | null;
+  created_at: string;
+  files: ShareFileReport[];
 };
 
 export type VerifyResult = {
@@ -120,8 +139,10 @@ export const api = {
       `/proofs/${proofId}/confirm`,
       { method: "POST", body: JSON.stringify(data), user: false },
     ),
-  createShareLink: (fileId: string) =>
-    request<ShareLink>(`/files/${fileId}/share`, { method: "POST" }),
+  createShareLink: (caseId: string) =>
+    request<ShareLink>(`/cases/${caseId}/share`, { method: "POST" }),
+  getShareReport: (token: string) =>
+    request<ShareReport>(`/share/${token}`, { user: false }),
   verifyFile: (fileId: string, uploadedHash: string) =>
     request<VerifyResult>("/verify/file", {
       method: "POST",

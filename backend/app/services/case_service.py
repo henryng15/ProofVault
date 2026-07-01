@@ -1,10 +1,20 @@
 from uuid import UUID
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.case import Case
+from app.models.case_event import CaseEvent
 from app.models.evidence_file import EvidenceFile
-from app.schemas.case import CreateCaseRequest
+from app.schemas.case import CreateCaseRequest, TimelineEventResponse
+
+
+_EVENT_LABELS: dict[str, str] = {
+    "proof_requested": "Proof requested",
+    "proof_confirmed": "Blockchain proof confirmed",
+    "file_added": "Evidence uploaded and hashed",
+    "verification_completed": "File verification completed",
+}
 
 
 def create_case(
@@ -52,3 +62,23 @@ def get_case_detail(
         .all()
     )
     return case, files
+
+
+def get_case_timeline(
+    session: Session,
+    case_id: UUID,
+) -> list[TimelineEventResponse]:
+    events = session.scalars(
+        select(CaseEvent)
+        .where(CaseEvent.case_id == case_id)
+        .order_by(CaseEvent.created_at.desc())
+    ).all()
+
+    return [
+        TimelineEventResponse(
+            event_type=e.event_type,
+            description=_EVENT_LABELS.get(e.event_type, e.event_type.replace("_", " ").title()),
+            created_at=e.created_at,
+        )
+        for e in events
+    ]

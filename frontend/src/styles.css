@@ -154,6 +154,139 @@ h2 { margin-top: 3px; font-size: 16px; letter-spacing: 0; }
 .timeline-item small { margin-top: 4px; color: #899089; font-size: 10px; }
 
 
+/* ── Page heading ─────────────────────────────────────────────── */
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0 22px;
+}
+.page-heading h1 { font-size: 26px; }
+
+/* ── State boxes (loading / empty / error) ────────────────────── */
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 64px 24px;
+  color: #6f766f;
+  text-align: center;
+}
+.state-box p { margin: 0; font-size: 14px; }
+.state-box.error { color: #8b3a3a; }
+
+/* ── Case grid (dashboard) ────────────────────────────────────── */
+.case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.case-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 16px;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #dfe2dd;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(35,45,37,.04);
+  transition: border-color .15s, box-shadow .15s;
+}
+.case-card:hover { border-color: #a8b5a8; box-shadow: 0 3px 10px rgba(35,45,37,.08); }
+.case-card-icon {
+  flex: 0 0 auto;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: #39785b;
+  background: #eaf2ec;
+  border-radius: 8px;
+}
+.case-card-body { flex: 1; min-width: 0; }
+.case-card-body strong { display: block; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.case-card-body p { margin: 4px 0 0; color: #6d746e; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.case-card-body small { display: block; margin-top: 6px; color: #939993; font-size: 11px; }
+.case-card-arrow { flex: 0 0 auto; color: #b0b8b1; }
+
+/* ── Breadcrumb button ────────────────────────────────────────── */
+.breadcrumb-btn {
+  color: #858b85;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  padding: 0;
+}
+.breadcrumb-btn:hover { color: #286548; text-decoration: underline; }
+
+/* ── Create case form ─────────────────────────────────────────── */
+.create-form { max-width: 520px; margin-top: 8px; }
+.form-group { display: grid; gap: 6px; margin-bottom: 18px; }
+.form-group label { font-size: 13px; font-weight: 650; }
+.form-input {
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #cfd4cd;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+}
+.form-input:focus { border-color: #39785b; box-shadow: 0 0 0 3px rgba(57,120,91,.12); }
+.form-input:disabled { opacity: .55; background: #f5f6f3; }
+.form-textarea { resize: vertical; min-height: 90px; }
+.required { color: #b04040; }
+.optional { color: #8a918a; font-weight: 400; font-size: 11px; }
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+  padding: 9px 12px;
+  color: #8b3a3a;
+  font-size: 12px;
+  background: #fdf0f0;
+  border: 1px solid #f0d0d0;
+  border-radius: 5px;
+}
+.form-actions { display: flex; gap: 10px; }
+
+/* ── File status variants (all 4 states) ──────────────────────── */
+.status-uploaded_not_proven { color: #7d6024; background: #f4ecd8; }
+.status-hash_saved { color: #286548; background: #e3f0e7; }
+.status-proof_pending { color: #3b5ea6; background: #e5edfa; }
+.status-confirmed { color: #1a5c3a; background: #d2eadb; font-weight: 750; }
+
+/* ── Share report (read-only public view) ─────────────────────── */
+.share-report { max-width: 680px; margin-top: 8px; }
+.share-report-header { padding: 28px 0 24px; border-bottom: 1px solid #dfe2dd; margin-bottom: 20px; }
+.share-badge { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; padding: 5px 10px; color: #286548; font-size: 11px; font-weight: 700; background: #e3f0e7; border-radius: 20px; }
+.share-report-header h1 { font-size: 26px; margin-bottom: 8px; }
+.share-report-header p { color: #6d746e; font-size: 14px; margin-bottom: 10px; }
+.share-report-header small { color: #939993; font-size: 12px; }
+.share-file-card { background: #fff; border: 1px solid #dfe2dd; border-radius: 8px; padding: 20px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(35,45,37,.04); }
+.share-file-name { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 15px; }
+.share-details { margin: 0; border-top: 1px solid #edf0eb; }
+.share-details div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid #edf0eb; }
+.share-details dt { color: #7e867f; font-size: 12px; }
+.share-details dd { margin: 0; font-size: 12px; text-align: right; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; word-break: break-all; }
+.share-footer { margin-top: 24px; padding: 12px 16px; display: flex; align-items: center; gap: 8px; color: #8a918a; font-size: 11px; background: #f5f6f3; border-radius: 6px; }
+
+/* ── Panel empty state ────────────────────────────────────────── */
+.panel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 36px 20px;
+  color: #8a918a;
+  text-align: center;
+}
+.panel-empty p { margin: 0; font-size: 13px; }
+
 @media (max-width: 850px) {
   .app-shell { grid-template-columns: 68px minmax(0, 1fr); }
   .sidebar { padding-inline: 8px; }

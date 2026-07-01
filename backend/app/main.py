@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes.cases import router as cases_router
 from app.api.routes.files import router as files_router
 from app.api.routes.proofs import router as proofs_router
+from app.api.routes.share import router as share_router
 from app.api.routes.verification import router as verification_router
 from app.core.config import settings
 
@@ -18,6 +19,7 @@ app.add_middleware(
 app.include_router(cases_router)
 app.include_router(files_router)
 app.include_router(proofs_router)
+app.include_router(share_router)
 app.include_router(verification_router)
 
 

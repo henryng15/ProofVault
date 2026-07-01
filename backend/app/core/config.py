@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     contract_address: str = ""
     chain_id: int = 80002
     amoy_rpc_url: str = "https://polygon-amoy.g.alchemy.com/v2/your_key_here"
+    frontend_url: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

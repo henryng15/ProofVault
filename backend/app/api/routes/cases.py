@@ -11,7 +11,7 @@ from app.schemas.case import (
     TimelineResponse,
 )
 from app.schemas.file import FileMetadataResponse
-from app.services.case_service import create_case, get_case_detail, list_cases
+from app.services.case_service import create_case, get_case_detail, get_case_timeline, list_cases
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 
@@ -59,17 +59,17 @@ def get_case_route(
 
 
 @router.get("/{case_id}/timeline", response_model=TimelineResponse)
-def get_case_timeline(
+def get_case_timeline_route(
     case_id: UUID,
     user_id: UUID = Depends(owner_id),
     session: Session = Depends(get_db),
 ) -> TimelineResponse:
     try:
         case, _ = get_case_detail(session, case_id, user_id)
+        events = get_case_timeline(session, case_id)
     except LookupError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except PermissionError as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
 
-    # Placeholder — case_events table will be added in Day 6 by Developer B
-    return TimelineResponse(case_id=case.id, events=[])
+    return TimelineResponse(case_id=case.id, events=events)
