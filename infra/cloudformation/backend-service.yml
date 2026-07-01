@@ -145,6 +145,8 @@ Resources:
               Value: !Ref ChainId
             - Name: CORS_ORIGINS
               Value: !Ref FrontendOrigin
+            - Name: FRONTEND_URL
+              Value: !Ref FrontendOrigin
           LogConfiguration:
             LogDriver: awslogs
             Options:
